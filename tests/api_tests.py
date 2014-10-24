@@ -28,7 +28,7 @@ class TestAPI(unittest.TestCase):
 
     def testGetEmptySongs(self):
         """ Query Empty Song List """
-        response = self.client.get("/songs",
+        response = self.client.get("/api/songs",
             headers=[("Accept", "application/json")]
             )
 
@@ -51,7 +51,7 @@ class TestAPI(unittest.TestCase):
         session.add_all([song1, song2])
         session.commit()
 
-        response = self.client.get("/songs",
+        response = self.client.get("/api/songs",
             headers=[("Accept","application/json")]
             )
 
@@ -72,7 +72,7 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(song2["file"]["name"], "SongFile 2")
 
     def testUnsupportedAcceptHeader(self):
-        response = self.client.get("/songs",
+        response = self.client.get("/api/songs",
             headers=[("Accept", "application/xml")]
             )
 
@@ -98,7 +98,7 @@ class TestAPI(unittest.TestCase):
             }
         }
 
-        response = self.client.post("/songs",
+        response = self.client.post("/api/songs",
             data=json.dumps(song),
             content_type="application/json",
             headers=[("Accept", "application/json")]
@@ -130,7 +130,7 @@ class TestAPI(unittest.TestCase):
             }
         }
 
-        response = self.client.post("/songs",
+        response = self.client.post("/api/songs",
             data=json.dumps(song),
             content_type="application/json",
             headers=[("Accept", "application/json")]
@@ -143,10 +143,9 @@ class TestAPI(unittest.TestCase):
         data = json.loads(data)
         self.assertEqual(data["message"], "Could not find song file with file id 1")
 
-
     def testUnsupportedMimetype(self):
         data = "<xml></xml>"
-        response = self.client.post("/songs",
+        response = self.client.post("/api/songs",
             data = json.dumps(data),
             content_type="application/xml",
             headers=[("Accept", "application/json")]
@@ -165,7 +164,7 @@ class TestAPI(unittest.TestCase):
             "file": {}
         }
 
-        response = self.client.post("/songs",
+        response = self.client.post("/api/songs",
             data=json.dumps(song),
             content_type="application/json",
             headers=[("Accept", "application/json")]
@@ -183,7 +182,7 @@ class TestAPI(unittest.TestCase):
             }
         }
 
-        response = self.client.post("/songs",
+        response = self.client.post("/api/songs",
             data=json.dumps(song),
             content_type="application/json",
             headers=[("Accept", "application/json")]

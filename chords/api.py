@@ -27,7 +27,7 @@ post_schema = {
     "required": ["file"]
 }
 
-@app.route("/songs", methods=["GET"])
+@app.route("/api/songs", methods=["GET"])
 @decorators.accept("application/json")
 def songs_get():
     """ Get a list of songs """
@@ -39,7 +39,7 @@ def songs_get():
     data = json.dumps([song.as_dictionary() for song in songs])
     return Response(data, 200, mimetype="application/json")
 
-@app.route("/songs", methods=["POST"])
+@app.route("/api/songs", methods=["POST"])
 @decorators.accept("application/json")
 @decorators.require("application/json")
 def songs_post():
