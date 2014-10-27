@@ -89,3 +89,15 @@ def file_post():
 
     data = db_file.as_dictionary()
     return Response(json.dumps(data), 201, mimetype="application/json")
+
+@app.route("/api/songs/<int:id>/analysis", methods=["GET"])
+@decorators.accept("application/json")
+def analyze_song(id):
+    song = session.query(models.Song).get(id)
+    if not song:
+        data = {"message": "Could not find song with id {}".format(id)}
+        return Response(json.dumps(data), 422, mimetype="application/json")
+    filename = song.file.filename
+    data = json.dumps(analysis.analyse(upload_path(filename)))
+    return Response(data, 200, mimetype="application/json")
+

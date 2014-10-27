@@ -36,4 +36,4 @@ class Song(Base):
     file_id = Column(Integer, ForeignKey("file.id"))
 
     def as_dictionary(self):
-        return {"id": self.id, "file": {"id": self.file.id, "name": self.file.filename}}
+        return {"id": self.id, "file": self.file.as_dictionary()}
